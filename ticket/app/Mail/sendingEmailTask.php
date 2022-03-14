@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
+
+class sendingEmailTask extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+
+    public $task_email;
+
+    public function __construct($task_email)
+    {
+        $this->emails_task = $task_email;
+    }
+
+    /**
+     * Build the message.s
+     *
+     * @return $this
+     */
+    public function build()
+    {
+
+        $email_time = Carbon::now();
+
+        return $this->subject('Task Create, '.$email_time)
+            ->from('gaptekxgaptekxgame@gmail.com', 'Ricky Fernando')
+            ->view('template_emails.email_task')
+            ->with('emails', $this->emails_task);
+    }
+}
