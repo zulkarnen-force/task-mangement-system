@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
+// use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -19,7 +20,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
     use RegistersUsers;
 
     /**
@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('user');
+        $this->middleware('guest');
     }
 
     /**
@@ -54,7 +54,6 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'username' => 'required|max:255',
             'password' => 'required|min:3|confirmed',
-            'tpye' => 'required',
         ]);
     }
 
@@ -69,7 +68,7 @@ class RegisterController extends Controller
         return User::create([
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
-            'type' => $data['type'],
-        ]);
+            'type' => "type"
+        ]);      
     }
 }

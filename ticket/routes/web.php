@@ -15,6 +15,14 @@
 
 Auth::routes();
 
+
+
+Route::get('/tasks/add', 'TaskController@create')->name('tasks.add');
+Route::post('/tasks', 'TaskController@store')->name('tasks.store');
+Route::get('/tasks', 'TaskController@index')->name('tasks.index');
+Route::get('/tasks/{id}', 'TaskController@show')->name('tasks.detail');
+Route::delete('/tasks/{id}', 'TaskController@destroy')->name('tasks.destroy');
+
 // Bagian API
 
 Route::get('/api-ticket/{created_by}', 'apiController@show');
@@ -72,7 +80,11 @@ Route::get('task_edit/{id}','ticketController@task_edit');
 
 Route::get('task_read/{id}','ticketController@task_read');
 
-
 // Bagian Export
 
 Route::get('export/{id}','ticketController@export');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+

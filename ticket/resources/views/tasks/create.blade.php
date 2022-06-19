@@ -7,22 +7,23 @@
                 <h4>Task Create</h4>
             </div>
             <div class="panel-body">
-                <form action="{{url('task_insert')}}" method="post">
+                <form action="{{route('tasks.store')}}" method="POST">
 
                     <div class="form-group">
                         <label for="nama">Name</label>
-                        <input type="text" name="nama" id="created_by" class="form-control" readonly="readonly" value="{{ Auth::user()->username }}" required="require">
+                        <input type="text" name="username" id="created_by" class="form-control" readonly="readonly" value="{{ Auth::user()->username }}" required="require">
+                        <input type="text" name="user_id" hidden value="{{ Auth::user()->id }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="judul">Task Title</label>
-                        <input type="text" name="task_title" id="task_title" class="form-control" required="require">
+                        <label for="title">Task Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required="require">
                     </div>
 
                     <div class="form-group">
                         <label for="pet-select">Choose Level Priority:</label>
 
-                        <select name="task_priority" id="task_priority" required="require">
+                        <select name="priority" id="priority" required="require">
                             <option value="">--Please choose an option--</option>
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -33,7 +34,7 @@
                     <div class="form-group">
                         <label for="pet-select">Status Task:</label>
 
-                        <select name="task_status" id="task_status" required="require">
+                        <select name="status" id="status" required="require">
                             <option value="waiting">Waiting</option>
                             <option value="progress">Progress</option>
                             <option value="done">Done</option>
@@ -41,8 +42,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="priority">Description</label>
-                        <textarea id="task_message" name="task_message" class="form-control" rows="15" required="require"></textarea>
+                        <label for="message">Description</label>
+                        <textarea id="message" name="message" class="form-control" rows="15" required="require"></textarea>
                     </div>
 
                     <div class="form-group">

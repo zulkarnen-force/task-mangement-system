@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ticket extends Model
+class Ticket extends Model
 {
- protected $table="ticket_list";
- protected $primaryKey="id";
- protected $fillable=['nama','judul','priority','status','isi'];
+    //
+    protected $table = "tickets";
+    protected $primaryKey = "id";
+    protected $fillable = ['user_id', 'title', 'status', 'priority', 'message'];
+
+    // public $incrementing = false;
 }
