@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\sendingEmailTicket;
 use App\Mail\sendingEmailTask;
+use App\Ticket;
 use DB;
 // use File;
 // use App\ticket;
@@ -42,7 +43,11 @@ class ticketController extends Controller
   {
     $data = $request->session()->all();
     // dd($data);
-    $data = DB::table('ticket_list')->paginate();
+    // $data = DB::table('ticket_list')->paginate();
+    $data = Ticket::get();
+
+    // TODO IF QUERY PARAMS
+       
 
     return view('index', compact('data'));
   }

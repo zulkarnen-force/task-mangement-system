@@ -22,7 +22,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = TaskNode::all()->toHierarchy();
-        return view('tasks.index', compact("tasks"));
+        $tickets = Ticket::get();
+        return view('tasks.index')->with(compact("tasks"))->with(compact("tickets"));
     }
 
     /**
@@ -108,7 +109,10 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $node = TaskNode::find($id);
+        $ticket = Ticket::find($node->ticket_id);
         $node->delete();
+        $ticket->delete();
+
         return back()->with('success', 'node deleted');
     }
 
