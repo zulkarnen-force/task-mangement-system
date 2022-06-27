@@ -228,7 +228,7 @@ class ticketController extends Controller
   {
     $data = $request->session()->all();
     // dd($data);
-    $data = DB::table('task_list')->paginate();
+    $data = Ticket::all();
     return view('task', compact('data'));
   }
 

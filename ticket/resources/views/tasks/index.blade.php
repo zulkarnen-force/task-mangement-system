@@ -236,15 +236,15 @@
                 <li class="mt-2 col" id={{$child->id}}>{{$child->title}} <small class="text-muted"><em> {{ getUsername($child->id) }}</em></small>
       
                   @php
-      
                     $childTicketId = $child->ticket_id;
                     $ticket = getTicketId($tickets, $childTicketId);
-                    
                     $priority = isset($ticket['priority']) ? $ticket['priority'] : null;
+                    
                     echo printLabelPriority($priority);   
-      
+                    
                     $status = isset($ticket['status']) ? $ticket['status'] : null ;
-                    echo printStatusLevel($status);  
+                    echo printStatusLevel($status); 
+
                     $csrf_token = csrf_token();
                     echo "<span class='float-end ms-3'><form class='delete-btn' onclick='deleteNode(this)' id='delete-$child->id' action='/tasks/$child->id' method='POST'>
                       {!! method_field('delete') !!}
@@ -254,6 +254,13 @@
                       <button type='submit' style='padding: 2px 2px ;' id='deleteButton' onclick='return confirm('Are You Sure Want to Delete?');' class='btn btn-danger btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>
                         <path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>
                       </svg></button>
+                      </form>
+                      </span>";
+
+                      echo "<span class='float-end ms-3'><form class='edit-form' onclick=submit() id='delete-$child->id' action='/tasks/$child->id/edit' method='GET'>
+                      <button type='submit' style='padding: 2px 2px ;' id='editButton' class='btn btn-danger btn-sm'>
+                        Edit
+                      </button>
                       </form>
                       </span>";
                   @endphp
@@ -309,7 +316,7 @@
 
   function deleteNode(thisForm) {
     if (confirm('Are You Sure Want to Delete?')) {
-      thisForm.submit()
+      thisForm.submit();
     } 
   }
 

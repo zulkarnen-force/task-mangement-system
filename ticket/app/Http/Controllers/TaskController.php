@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TaskNodeFilter\TaskNodeFilter;
 use App\TaskNode;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
@@ -98,6 +99,11 @@ class TaskController extends Controller
     public function edit($id)
     {
         //
+        // TaskNode::find($id);
+        $ticket = TaskNode::find($id)->ticket;
+        $user = User::find($ticket->user_id);
+
+        return view('task_edit', array('id' => $id, 'user' => $user)) ->with( compact('ticket'));
     }
 
     /**
@@ -109,7 +115,28 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // update
+        $task = TaskNode::find($id);
+        $ticket = $task->ticket;
+       
+        // $ticket = TaskNode::find($id);
+      
+        $validator = $this->validate($request, [
+            'message' => 'max:255'
+        ]);
+        
+
+        $title = $request->input('title');
+        
+        $ticket = $ticket->update($request->all());
+        
+        return  dd($ticket);
+        
+        $root = TaskNode::root();
+        
+        $child = $root->children()->create(['title' => $title, 'ticket_id' => $ticket_id]);
+
+        return Redirect::to('tasks')->with('success', 'note added successfully');
     }
 
     /**

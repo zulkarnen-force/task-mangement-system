@@ -25,6 +25,8 @@ Route::get('/tasks', 'TaskController@index')->name('tasks.index');
 Route::get('/tasks/{id}', 'TaskController@show')->name('tasks.detail');
 Route::delete('/tasks/{id}', 'TaskController@destroy')->name('tasks.destroy');
 Route::post('/tasks/filter', 'TaskController@filter')->name('tasks.filter');
+Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
+Route::put('/tasks/{id}', 'TaskController@update')->name('tasks.update');
 
 
 // Bagian API

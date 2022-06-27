@@ -27,15 +27,16 @@
                 <!-- listing task -->
                 <tr>
                     <td>{{ $d->id }}</td>
-                    <td>{{ $d->created_by }}</td>
-                    <td>{{ $d->task_title }}</td>
+                    {{-- <td>{{ $username }}</td> --}}
+                    <td>Username</td>
+                    <td>{{ $d->title }}</td>
                     <td>
-                        <div style="white-space: nowrap; width: 200px; overflow: hidden; text-overflow: ellipsis;">{{ $d->task_message }}</div>
+                        <div style="white-space: nowrap; width: 200px; overflow: hidden; text-overflow: ellipsis;">{{ $d->message }}</div>
                     </td>
-                    <td>{{ $d->task_priority }}</td>
-                    <td>{{ $d->task_status }}</td>
-                    <td>{{ date("d F Y h:m:s", strtotime($d->c_date))}}</td>
-                    <td>{{ date("d F Y h:m:s", strtotime($d->m_date))}}</td>
+                    <td>{{ $d->priority }}</td>
+                    <td>{{ $d->status }}</td>
+                    <td>{{ date("d F Y h:m:s", strtotime($d->created_at))}}</td>
+                    <td>{{ date("d F Y h:m:s", strtotime($d->updated_at))}}</td>
                     <td>
                         <a href="{{url('task_delete',array($d->id))}}" onclick="return confirm('Anda yakin mau menghapus ticket ini ?')">Delete</a>
                         <span>|</span>
