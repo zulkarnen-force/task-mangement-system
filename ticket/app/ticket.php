@@ -11,5 +11,9 @@ class Ticket extends Model
     protected $primaryKey = "id";
     protected $fillable = ['user_id', 'title', 'status', 'priority', 'message'];
 
-    // public $incrementing = false;
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    } 
+    
 }

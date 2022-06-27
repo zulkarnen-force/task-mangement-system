@@ -12,14 +12,18 @@
             <div class="panel-body">
                 <form action="{{url('update', $data->id)}}" method="post">
                     <!-- <input type="hidden" name="id" id="id" value="{{$data->id}}"> -->
+                    @php
+                        $user = App\User::find($data->user_id)->get()->first();
+                    @endphp
+
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" value="{{$data->name}}" required="require">
+                        <input type="text" name="nama" disabled id="nama" class="form-control" value="{{$user->username}}" required="require">
                     </div>
 
                     <div class="form-group">
-                        <label for="judul">Judul</label>
-                        <input type="text" name="judul" id="judul" value="{{$data->tittle}}" class="form-control">
+                        <label for="title">Judul</label>
+                        <input type="text" name="title" id="title" value="{{$data->title}}" class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -51,15 +55,19 @@
                         <label for="pet-select">Status Ticket:</label>
 
                         <select name="status" id="status" required="require">
-                            <option value="waiting">Waiting</option>
+                                <option value="{{$data->status}}" selected>{{ $data['status'] }}</option>
+                                <option value="waiting">Waiting</option>
+                                <option value="progress">Progress</option>
+                                <option value="done">Done</option>
+                            </select>
                         </select>
                     </div>
 
                     @endif
 
                     <div class="form-group">
-                        <label for="isi">Deskripsi</label>
-                        <textarea rows="15" id="isi" name="isi" class="form-control" value=""><?php echo $data->message; ?></textarea>
+                        <label for="message">Deskripsi</label>
+                        <textarea rows="15" id="message" name="message" class="form-control" value=""><?php echo $data->message; ?></textarea>
                     </div>
 
                     <div class="form-group">

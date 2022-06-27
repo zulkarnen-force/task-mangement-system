@@ -30,7 +30,7 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        return '/login';
+        return '/home';
     }
 
     /**

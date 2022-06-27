@@ -13,22 +13,24 @@
 
 // Route View
 
+use App\Http\Controllers\TaskController;
+
 Auth::routes();
 
-
+Route::get('/', 'HomeController@index');
 
 Route::get('/tasks/add', 'TaskController@create')->name('tasks.add');
 Route::post('/tasks', 'TaskController@store')->name('tasks.store');
 Route::get('/tasks', 'TaskController@index')->name('tasks.index');
 Route::get('/tasks/{id}', 'TaskController@show')->name('tasks.detail');
 Route::delete('/tasks/{id}', 'TaskController@destroy')->name('tasks.destroy');
+Route::post('/tasks/filter', 'TaskController@filter')->name('tasks.filter');
+
 
 // Bagian API
-
 Route::get('/api-ticket/{created_by}', 'apiController@show');
 
 // Bagian Get
-
 Route::get('back','ticketController@back');
 
 Route::get('create','ticketController@create');
@@ -40,6 +42,8 @@ Route::get('edit/{id}','ticketController@edit');
 Route::get('read/{id}','ticketController@read');
 
 Route::get('list', 'ticketController@index');
+
+Route::post('list/filter', 'ticketController@filter');
 
 Route::get('admin', 'ticketController@admin');
 
@@ -58,7 +62,7 @@ Route::post('insert', 'ticketController@insert');
 
 Route::post('posting', 'ticketController@inskomentar');
 
-Route::post('update/{id}', 'ticketController@update');
+Route::post('/update/{id}', 'ticketController@update');
 
 Route::post('register', 'ticketController@Usrinsert');
 
@@ -83,8 +87,8 @@ Route::get('task_read/{id}','ticketController@task_read');
 // Bagian Export
 
 Route::get('export/{id}','ticketController@export');
-Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
 
 

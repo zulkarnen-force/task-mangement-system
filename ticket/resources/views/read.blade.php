@@ -13,18 +13,18 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" id="nama" value="{{$data->name}}" class="form-control" readonly>
+                    <input type="text" name="nama" id="nama" value="{{ App\User::find($tickets['user_id'])['username'] }}" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="judul">Judul</label>
-                    <input type="text" name="judul" id="judul" value="{{$data->tittle}}" class="form-control" readonly>
+                    <input type="text" name="judul" id="judul" value="{{ $tickets->title }}" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="desk">Deskripsi</label>
 
                     <!-- <div -->
-                    <textarea rows="20" class="form-control" input type="text" readonly="readonly" name="isi" id="isi" value=""><?php echo $data->message; ?></textarea>
-                    <!-- <input type="text" name="isi" id="isi" value="{{$data->message}}" class="form-control" readonly> -->
+                    <textarea rows="20" class="form-control" input type="text" readonly="readonly" name="isi" id="isi" value=""><?php echo $tickets->message; ?></textarea>
+                    <!-- <input type="text" name="isi" id="isi" value="{{ $tickets->message }}" class="form-control" readonly> -->
                     <!-- </div> -->
 
                 </div>
@@ -44,7 +44,7 @@
                 <h4>Kolom Komentar :</h4>
             </div>
 
-            @foreach($data_komentar as $key => $d)
+            {{-- @foreach($data_komentar as $key => $d)
 
             <div class="panel-heading">
                 <table class="table table-striped">
@@ -89,7 +89,7 @@
                 </table>
             </div>
 
-            @endforeach
+            @endforeach --}}
             <div class="panel-heading" style="background-color:powderblue;">
                 <h4>Kolom Pengisian :</h4>
             </div>
@@ -97,7 +97,7 @@
             <div class="panel-body">
                 <form action="{{url('posting')}}" method="post">
 
-                    <input style="width: 110px;" maxlength="10" type="text" name="id_ticket" id="id_ticket" value="{{$data->id}}" class="hidden">
+                    <input style="width: 110px;" maxlength="10" type="text" name="id_ticket" id="id_ticket" value="{{$tickets->id}}" class="hidden">
 
                     <div class="form-group">
                         <label for="kode">Nama</label>

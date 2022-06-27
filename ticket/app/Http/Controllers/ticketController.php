@@ -12,8 +12,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\sendingEmailTicket;
 use App\Mail\sendingEmailTask;
+use App\TaskNode;
 use App\Ticket;
+use App\User;
 use DB;
+use TaskController;
+use Illuminate\Support\Facades\App;
 // use File;
 // use App\ticket;
 
@@ -42,13 +46,8 @@ class ticketController extends Controller
   public function index(Request $request)
   {
     $data = $request->session()->all();
-    // dd($data);
-    // $data = DB::table('ticket_list')->paginate();
     $data = Ticket::get();
-
-    // TODO IF QUERY PARAMS
-       
-
+    
     return view('index', compact('data'));
   }
 
@@ -112,32 +111,31 @@ class ticketController extends Controller
 
   public function edit($id)
   {
-    $data = DB::table('ticket_list')->find($id);
+    $data = Ticket::find($id);
 
     return view('edit', compact('data'));
   }
 
   public function update(Request $request)
   {
-    // update data list
-    DB::table('ticket_list')->where('id', $request->id)->update([
-      'name' => $request->get('nama'),
-      'tittle' => $request->get('judul'),
-      'priority' => $request->get('priority'),
-      'status' => $request->get('status'),
-      'message' => $request->get('isi'),
-      'm_date' => $request->get('m_date'),
-    ]);
+    $ticketId = $request->id;
+
+    $ticket = Ticket::find($ticketId);
+    $ticket->update($request->all());
+
+    $taskNode = TaskNode::where('ticket_id', $ticketId);
+    $taskNode->update(['title' => $request->get('title')]);
 
     return redirect('list')->with('alert', 'Ticket berhasil Diubah.');
   }
 
-  public function read($id)
+  public function read(Request $requset, $id)
   {
-    $data = DB::table('ticket_list')->find($id);
-    $data_komentar = DB::table('komentar')->where('id_ticket', $data->id)->get();
+    $tickets = Ticket::find($id);
+    // $data = DB::table('ticket_list')->find($id);
+    // $data_komentar = DB::table('komentar')->where('id_ticket', $data->id)->get();
 
-    return view('read', compact('data', 'data_komentar'));
+    return view('read', compact('tickets'));
   }
 
   public function login()
@@ -302,8 +300,7 @@ class ticketController extends Controller
 
   public function task_read($id)
   {
-    $data = DB::table('task_list')->find($id);
-
+    $data = Ticket::find($id);
     return view('task_read', compact('data'));
   }
 
@@ -326,4 +323,83 @@ class ticketController extends Controller
       ->insert($task);
     return redirect('list')->with('alert', 'Export Ke Task Berhasil');
   }
+
+  public function getUserIdByUsername($requset, $username) 
+  {
+      $user =  User::where('username', '=', $username)->get()->first();
+      $userId = $user->id;
+      return $userId; 
+  }
+
+  public function setQueryDate($query, $dateFormat)
+  {
+    return $query->where('created_at', '>=', $dateFormat.' 00:00:00');
+  }
+
+  public function getRangeParams($queryParams) 
+  {
+    $ALLOWED_KEYS = ['to', 'from'];
+    
+    $range = array_filter(
+      $queryParams,
+      function ($key) use ($ALLOWED_KEYS) {
+          return in_array($key, $ALLOWED_KEYS);
+      },
+      ARRAY_FILTER_USE_KEY
+    );
+    
+    return $range;
+  }
+
+  
+
+  public function filter(Request $request, Ticket $ticket) 
+  {
+    $requests = $request->all();
+    $rangeQueryParams = $this->getRangeParams($requests);
+
+    if ($request->exists('to'))  unset($requests['to'], $requests['from']);
+  
+
+    $query = $ticket::query();
+
+    $removeNonValue = function ($value) {
+      return (strlen($value) !== 0);
+    };
+
+
+    if (count($rangeQueryParams) !== 0) {
+      $query->whereBetween('created_at', [$rangeQueryParams['from'].' 00:00:00', $rangeQueryParams['to'].' 23:59:59']);
+    }
+
+    $requestFiltered = $request->except('_token', 'origin', 'to', 'from');
+
+    foreach ($requestFiltered as $key => $value) {
+
+      if ($key === 'user') {
+        $userId = $this->getUserIdByUsername($request, $value);
+        $query->where("user_id", $userId);
+      } else if ($key === 'created_at') {
+        $query->whereBetween('created_at', [$value.' 00:00:00', $value.' 23:59:59']);
+      } else if ($key === 'updated_at') {
+        $query->whereBetween('updated_at', [$value.' 00:00:00', $value.' 23:59:59']);
+      } else {
+        $query->where($key, $value);
+      }
+
+    }
+
+    $data = $query->get();
+
+    return view('index', compact('data'));
+    
+    // return $pathOrigin === 'tasks'; 
+    // if ($pathOrigin === 'tasks') {
+    //   return redirect('tasks');
+    // } else {
+    //   return view('index', compact('data'));
+    // }
+
+  }
+
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\TaskNodeFilter\TaskNodeFilter;
 use App\TaskNode;
 use App\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Validator;
 
 class TaskController extends Controller
 {
@@ -16,14 +19,18 @@ class TaskController extends Controller
 
      public function __construct()
      {
-        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('auth');
      }
 
     public function index()
     {
+        // $tasks = TaskNode::all()->toHierarchy();
         $tasks = TaskNode::all()->toHierarchy();
+        $root = TaskNode::root();
+        $childrens =  $root->getDescendants();
+
         $tickets = Ticket::get();
-        return view('tasks.index')->with(compact("tasks"))->with(compact("tickets"));
+        return view('tasks.index', compact('tasks', 'root', 'childrens', 'tickets'));
     }
 
     /**
@@ -51,9 +58,13 @@ class TaskController extends Controller
             $root->makeRoot();
         }
 
-        $title = $request->input('title');
+        $validator = $this->validate($request, [
+            'message' => 'max:255'
+        ]);
+        
 
-        // Save to ticket
+        $title = $request->input('title');
+        
         $ticket = Ticket::create($request->all());
         $ticket_id =  $ticket->id;
         
@@ -61,7 +72,8 @@ class TaskController extends Controller
         
         $child = $root->children()->create(['title' => $title, 'ticket_id' => $ticket_id]);
 
-        return redirect('/tasks');
+        return Redirect::to('tasks')->with('success', 'note added successfully');
+
      
     }
 
@@ -109,11 +121,23 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $node = TaskNode::find($id);
-        $ticket = Ticket::find($node->ticket_id);
+        Ticket::destroy($node->ticket_id);
+        
         $node->delete();
-        $ticket->delete();
 
         return back()->with('success', 'node deleted');
+    }
+
+
+    public function filter(Request $request)
+    {
+        $tickets = Ticket::get();
+        $filtered = TaskNodeFilter::apply($request);
+
+        $childrens = $filtered['childrens'];
+        $root = $filtered['root'];
+
+        return view('tasks.index', compact('childrens', 'root', 'tickets'));
     }
 
 }
