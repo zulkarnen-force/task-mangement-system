@@ -206,7 +206,7 @@
 
     <div class="col-2">
       <form action="{{ route('tasks.add') }}" method="GET">
-        <button class="btn btn-success btn-sm">New Node</button>
+        <button class="btn btn-success btn-sm">New Task</button>
       </form>
     </div>
     
@@ -220,13 +220,20 @@
             <li id="{{ $root['id'] }}" data-jstree='{"opened":true}'> {{ $root['title'] }} 
               @php
                   function getUserId($id) {
-                    $userId = App\TaskNode::find($id)->ticket->user_id;
+                    $userId = App\TaskNode::find($id)->ticket;
                     return $userId;
                   };
 
                   function getUsername($nodeId) {
-                    $userId = getUserId($nodeId);
-                    return (App\User::find($userId)->username);
+                    $userId = getUserId($nodeId)['user_id'];
+                    try {
+                      $user = App\User::findOrFail($userId);
+                      return $user['username'];
+                    } catch (Exception $e){
+                      return false;
+                    }
+                  
+                    
                   };
 
               @endphp
@@ -251,15 +258,15 @@
                       {!! csrf_field() !!}    
                       <input type='hidden' name='_method' value='delete' />
                       <input type='hidden' name='_token' value='$csrf_token'/>
-                      <button type='submit' style='padding: 2px 2px ;' id='deleteButton' onclick='return confirm('Are You Sure Want to Delete?');' class='btn btn-danger btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>
-                        <path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>
-                      </svg></button>
+                      <button type='submit' style='padding: 2px 5px;' id='deleteButton' onclick='return confirm('Are You Sure Want to Delete?');' class='btn btn-danger btn-sm'>
+                        <i class='bi bi-trash'></i>  
+                      </button>
                       </form>
                       </span>";
 
-                      echo "<span class='float-end ms-3'><form class='edit-form' onclick=submit() id='delete-$child->id' action='/tasks/$child->id/edit' method='GET'>
-                      <button type='submit' style='padding: 2px 2px ;' id='editButton' class='btn btn-danger btn-sm'>
-                        Edit
+                      echo "<span class='float-end ms-5'><form class='edit-form' onclick=submit() id='delete-$child->id' action='/tasks/$child->id/edit' method='GET'>
+                      <button type='submit' style='padding: 2px 5px ;' id='editButton' class='btn btn-primary btn-sm'>
+                        <i class='bi bi-pencil'></i>
                       </button>
                       </form>
                       </span>";

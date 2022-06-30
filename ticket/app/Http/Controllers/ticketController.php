@@ -105,8 +105,13 @@ class ticketController extends Controller
 
   public function delete($id)
   {
-    $data = DB::table('ticket_list')->delete($id);
+
+    $ticket = Ticket::find($id);
+    $ticket->task()->delete();
+    $ticket->delete();
+  
     return redirect('list')->with('alert', 'Ticket Berhasil Di Hapus');
+
   }
 
   public function edit($id)

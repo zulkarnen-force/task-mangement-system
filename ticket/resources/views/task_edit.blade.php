@@ -16,18 +16,18 @@
                     {{-- <!-- <input type="hidden" name="id" id="id" value="{{$ticket->id}}"> --> --}}
                     <div class="form-group">
                         <label for="nama">Username</label>
-                        <input type="text" name="created_by" id="created_by" class="form-control" readonly="readonly" value="{{$user->username}}" required="require">
+                        <input type="text" name="username" id="username" class="form-control" readonly="readonly" value="{{$user->username}}" required="require">
                     </div>
 
                     <div class="form-group">
                         <label for="judul">Task Title</label>
-                        <input type="text" name="task_title" id="task_title" value="{{$ticket->title}}" class="form-control">
+                        <input type="text" name="title" id="title" value="{{$ticket->title}}" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label for="pet-select">Task Status:</label>
 
-                        <select name="task_status" id="task_status" required="require">
+                        <select name="status" id="status" required="require">
                         <option value="{{$ticket->status}}">Status Sebelumnya -> <?php echo $ticket->status; ?></option>
                             <option value="waiting">Waiting</option>
                             <option value="progress">Progress</option>
@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="pet-select">Task Level Priority:</label>
 
-                        <select name="task_priority" id="task_priority">
+                        <select name="priority" id="priority">
                             <option value="{{ $ticket->priority }}">Priority Sebelumnya -> <?php echo $ticket->priority; ?></option>
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -48,7 +48,7 @@
 
                     <div class="form-group">
                         <label for="isi">Description</label>
-                        <textarea rows="15" id="task_message" name="task_message" class="form-control" value=""><?php echo $ticket->message; ?></textarea>
+                        <textarea rows="15" id="message" name="message" class="form-control" value=""><?php echo $ticket->message; ?></textarea>
                     </div>
 
                     <div class="form-group">

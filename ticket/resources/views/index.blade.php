@@ -123,6 +123,21 @@
                     </tr>
                 </thead>
 
+                @php
+                    function userExits($id) : bool {
+                        try {
+                            $user = App\User::findOrFail($id);
+                            return true;
+                        } catch (Exception $e) {
+                            return false;
+                        }
+                    }
+
+                    function getUsername($id) : string {
+                        return App\User::find($id)['username'];
+                    }
+                @endphp
+
                 <tbody>
                 @foreach($data as $d)
 
@@ -131,7 +146,7 @@
                 
                 <tr>
                     <td>{{ $d->id }}</td>
-                    <td>{{ App\User::find($d->user_id)->username }}</td>
+                    <td>{{ userExits($d->user_id) ? getUsername($d->user_id) : 'no user' }}</td>
                     <td>{{ $d->title }}</td>
                     <td>{{ $d->priority }}</td>
                     <td>
@@ -144,10 +159,10 @@
                     <td>
                         <a href="{{url('read',array($d->id))}}">Read & Comment</a>
                         <span>|</span>
-                        @if (Auth::user()->type == 'root')
+                        {{-- @if (Auth::user()->type == 'root') --}}
                         <a href="{{url('delete',array($d->id))}}" onclick="return confirm('Anda yakin mau menghapus ticket ini ?')">Delete</a>
                         <span>|</span>
-                        @endif
+                        {{-- @endif --}}
                         <a href="{{url('edit',array($d->id))}}">Edit</a>
                     </td>
                 </tr>
