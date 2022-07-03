@@ -1,0 +1,3763 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Task Management Documentation",
+    "description": "Task Management API Binokular Media Utama",
+    "contact": {
+      "email": "zulkarnen1900016072@webmail.uad.ac.id"
+    }
+  },
+
+  "components": {
+    "schemas": [{
+      "header": {
+        "in":"header",
+        "required":true,
+        "type":"string",
+        "schema":[{
+          "type":"string"
+        }]
+      }
+    }]
+  },
+  "host": "localhost:8000",
+  "basePath": "/api",
+  "securityDefinitions": {
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/token": {
+      "get": {
+        "summary": "Get JWT Token",
+        "tags": [
+          "AUTH"
+        ],
+        "operationId": "GetToken",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TokenResponseExample"
+            },
+            "examples": {
+              "application/json": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTY1NjYzNzY2NSwiZXhwIjoxNjU2NjQxMjY1LCJuYmYiOjE2NTY2Mzc2NjUsImp0aSI6InpMUW9qZXlUU3RNUm9LeEwiLCJzdWIiOjUsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.-Hgb746KKGnjGYwfknTo4TnPNUZqA7du7N9b5jKXIrA",
+                "token_type": "bearer",
+                "expires_in": 3600
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              }
+            }
+          }
+        },
+        "security": [{
+          "header":[]
+        }]
+      }
+    },
+    "/auth/refresh": {
+      "get": {
+        "summary": "Refresh Token",
+        "tags": [
+          "AUTH"
+        ],
+        "operationId": "RefreshToken",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "in":"header",
+          "name":"Authoriztion",
+          "required":true,
+          "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RefreshTokenExample"
+            },
+            "examples": {
+              "application/json": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9yZWZyZXNoIiwiaWF0IjoxNjU2NjM3NjY1LCJleHAiOjE2NTY2NDEzMTQsIm5iZiI6MTY1NjYzNzcxNCwianRpIjoidmk5SElFU3RKOXo3Uk9FMyIsInN1YiI6NSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.55voIGTuUO_pa_qt1n0FusZjaooM7_uPFAreVTYR7Qk",
+                "token_type": "bearer",
+                "expires_in": 3600
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 01:08:34 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/info": {
+      "get": {
+        "summary": "Get Info Authenticated User",
+        "tags": [
+          "AUTH"
+        ],
+        "operationId": "GetInfoAuthenticatedUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "in":"header",
+          "name":"Authoriztion",
+          "required":true,
+          "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetInfoAuthenticatedUserExample"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "result": {
+                  "id": 5,
+                  "username": "admin",
+                  "type": "type",
+                  "created_at": "2022-06-15 01:03:51",
+                  "updated_at": "2022-06-30 07:31:21"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 01:09:20 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get Users",
+        "tags": [
+          "USER"
+        ],
+        "operationId": "GetUsers",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "in":"header",
+          "name":"Authoriztion",
+          "required":true,
+          "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetUsers"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": [
+                  {
+                    "id": 5,
+                    "username": "admin",
+                    "type": "type",
+                    "created_at": "2022-06-15 01:03:51",
+                    "updated_at": "2022-06-30 07:31:21"
+                  },
+                  {
+                    "id": 6,
+                    "username": "dev",
+                    "type": "type",
+                    "created_at": "2022-06-17 02:36:21",
+                    "updated_at": "2022-06-23 07:40:46"
+                  },
+                  {
+                    "id": 25,
+                    "username": "new username",
+                    "type": "role",
+                    "created_at": "2022-06-29 03:52:09",
+                    "updated_at": "2022-06-29 04:02:25"
+                  },
+                  {
+                    "id": 27,
+                    "username": "postmanname",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:33:42",
+                    "updated_at": "2022-06-29 07:33:42"
+                  },
+                  {
+                    "id": 29,
+                    "username": "usernamenew",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:36:37",
+                    "updated_at": "2022-06-29 07:36:37"
+                  },
+                  {
+                    "id": 32,
+                    "username": "Alvena19",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:40:29",
+                    "updated_at": "2022-06-29 07:40:29"
+                  },
+                  {
+                    "id": 33,
+                    "username": "Elza_Swaniawski",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:41:52",
+                    "updated_at": "2022-06-29 07:41:52"
+                  },
+                  {
+                    "id": 34,
+                    "username": "Ara83",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:42:10",
+                    "updated_at": "2022-06-29 07:42:10"
+                  },
+                  {
+                    "id": 35,
+                    "username": "Beatrice60",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:42:23",
+                    "updated_at": "2022-06-29 07:42:23"
+                  },
+                  {
+                    "id": 36,
+                    "username": "Walter_Conn",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:42:29",
+                    "updated_at": "2022-06-29 07:42:29"
+                  },
+                  {
+                    "id": 37,
+                    "username": "Mohammed.Klein",
+                    "type": "role",
+                    "created_at": "2022-06-29 07:47:02",
+                    "updated_at": "2022-06-29 07:47:02"
+                  },
+                  {
+                    "id": 41,
+                    "username": "Elena.Cole26",
+                    "type": "role",
+                    "created_at": "2022-06-29 08:08:17",
+                    "updated_at": "2022-06-29 08:08:17"
+                  },
+                  {
+                    "id": 50,
+                    "username": "Cassandra2",
+                    "type": "role",
+                    "created_at": "2022-06-30 04:40:04",
+                    "updated_at": "2022-06-30 04:40:04"
+                  },
+                  {
+                    "id": 51,
+                    "username": "Ellie.Reynolds",
+                    "type": "role",
+                    "created_at": "2022-06-30 04:41:10",
+                    "updated_at": "2022-06-30 04:41:10"
+                  },
+                  {
+                    "id": 52,
+                    "username": "Bethel.Kohler",
+                    "type": "role",
+                    "created_at": "2022-06-30 04:41:43",
+                    "updated_at": "2022-06-30 04:41:43"
+                  },
+                  {
+                    "id": 59,
+                    "username": "Samara.Stroman44",
+                    "type": "role",
+                    "created_at": "2022-06-30 06:23:53",
+                    "updated_at": "2022-06-30 06:23:53"
+                  },
+                  {
+                    "id": 66,
+                    "username": "Alize_Mosciski18",
+                    "type": "role",
+                    "created_at": "2022-06-30 06:54:30",
+                    "updated_at": "2022-06-30 06:54:30"
+                  },
+                  {
+                    "id": 67,
+                    "username": "Justus_Schuppe97",
+                    "type": "role",
+                    "created_at": "2022-06-30 06:54:41",
+                    "updated_at": "2022-06-30 06:54:41"
+                  },
+                  {
+                    "id": 68,
+                    "username": "Stacey_Johnston9",
+                    "type": "role",
+                    "created_at": "2022-06-30 06:56:11",
+                    "updated_at": "2022-06-30 06:56:11"
+                  },
+                  {
+                    "id": 76,
+                    "username": "Lindsay.Leuschke",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:21:04",
+                    "updated_at": "2022-07-01 01:21:04"
+                  },
+                  {
+                    "id": 77,
+                    "username": "Kara_Kris76",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:22:03",
+                    "updated_at": "2022-07-01 01:22:03"
+                  },
+                  {
+                    "id": 78,
+                    "username": "Mckayla_Kuphal69",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:23:17",
+                    "updated_at": "2022-07-01 01:23:17"
+                  },
+                  {
+                    "id": 79,
+                    "username": "Rod_Carter32",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:23:47",
+                    "updated_at": "2022-07-01 01:23:47"
+                  },
+                  {
+                    "id": 80,
+                    "username": "Cassandra_Bode78",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:25:49",
+                    "updated_at": "2022-07-01 01:25:49"
+                  },
+                  {
+                    "id": 81,
+                    "username": "Tyrese22",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:25:57",
+                    "updated_at": "2022-07-01 01:25:57"
+                  },
+                  {
+                    "id": 87,
+                    "username": "Samara15",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:49:30",
+                    "updated_at": "2022-07-01 01:49:30"
+                  },
+                  {
+                    "id": 88,
+                    "username": "Theresia.Wunsch",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:50:35",
+                    "updated_at": "2022-07-01 01:50:35"
+                  },
+                  {
+                    "id": 89,
+                    "username": "Stevie_Watsica",
+                    "type": "role",
+                    "created_at": "2022-07-01 01:51:24",
+                    "updated_at": "2022-07-01 01:51:24"
+                  },
+                  {
+                    "id": 91,
+                    "username": "Jesse_Mohr91",
+                    "type": "role",
+                    "created_at": "2022-07-01 02:20:24",
+                    "updated_at": "2022-07-01 02:20:24"
+                  }
+                ],
+                "length": 29
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:22:31 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Add New User",
+        "tags": [
+          "USER"
+        ],
+        "operationId": "AddNewUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AddNewUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/AddNewUser"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "username": "Nora.Davis50",
+                  "type": "role",
+                  "updated_at": "2022-07-01 02:26:47",
+                  "created_at": "2022-07-01 02:26:47",
+                  "id": 92
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:26:47 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get Spesific User",
+        "tags": [
+          "USER"
+        ],
+        "operationId": "GetSpesificUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "user id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetSpesificUser"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 91,
+                  "username": "Jesse_Mohr91",
+                  "type": "role",
+                  "created_at": "2022-07-01 02:20:24",
+                  "updated_at": "2022-07-01 02:20:24"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:20:27 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "58"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete User",
+        "tags": [
+          "USER"
+        ],
+        "operationId": "DeleteUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteUser"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 92,
+                  "username": "Nora.Davis50",
+                  "type": "role",
+                  "created_at": "2022-07-01 02:26:47",
+                  "updated_at": "2022-07-01 02:26:47"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:27:13 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Get Tasks",
+        "tags": [
+          "TASKS"
+        ],
+        "operationId": "GetTasks",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetTasksSuccessExample"
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:15:24 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Add Task",
+        "tags": [
+          "TASKS"
+        ],
+        "operationId": "AddTask",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AddTaskRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/AddTask"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "message": "task added successfully",
+                "result": {
+                  "id": 164,
+                  "title": "postman add",
+                  "parent_id": 1,
+                  "lft": 152,
+                  "rgt": 153,
+                  "depth": 1,
+                  "ticket_id": 152,
+                  "created_at": "2022-07-01 02:29:14",
+                  "updated_at": "2022-07-01 02:29:14"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:29:14 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/tasks/{taskId}": {
+      "get": {
+        "summary": "GET Spesific Task",
+        "tags": [
+          "TASKS"
+        ],
+        "operationId": "GETSpesificTask",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GETSpesificTask"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 163,
+                  "title": "postman add",
+                  "parent_id": 1,
+                  "lft": 150,
+                  "rgt": 151,
+                  "depth": 1,
+                  "ticket_id": 151,
+                  "created_at": "2022-07-01 01:57:31",
+                  "updated_at": "2022-07-01 01:57:31"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 01:57:34 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "57"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "Update Task",
+        "tags": [
+          "TASKS"
+        ],
+        "operationId": "UpdateTask",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdateTaskRequest"
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateTask"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 163,
+                  "title": "update",
+                  "parent_id": 1,
+                  "lft": 150,
+                  "rgt": 151,
+                  "depth": 1,
+                  "ticket_id": 151,
+                  "created_at": "2022-07-01 01:57:31",
+                  "updated_at": "2022-07-01 02:29:39"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:29:39 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete a task",
+        "tags": [
+          "TASKS"
+        ],
+        "operationId": "Deleteatask",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Deleteatask"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 163,
+                  "title": "update",
+                  "parent_id": 1,
+                  "lft": 150,
+                  "rgt": 151,
+                  "depth": 1,
+                  "ticket_id": 151,
+                  "created_at": "2022-07-01 01:57:31",
+                  "updated_at": "2022-07-01 02:29:39"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:30:04 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets": {
+      "get": {
+        "summary": "GET TICKETS",
+        "tags": [
+          "TICKETS"
+        ],
+        "operationId": "GETTICKETS",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GETTICKETS"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "result": [
+                  {
+                    "id": 17,
+                    "user_id": 5,
+                    "title": "update task --force",
+                    "priority": "high",
+                    "status": "done",
+                    "message": "update description ",
+                    "created_at": "2022-06-20 04:37:31",
+                    "updated_at": "2022-06-30 04:36:20"
+                  },
+                  {
+                    "id": 18,
+                    "user_id": 5,
+                    "title": "Quo usque tandem abutere, Catilina, patientia nostra?",
+                    "priority": "high",
+                    "status": "waiting",
+                    "message": "Unless explicitly silenced.",
+                    "created_at": "2022-06-20 08:20:07",
+                    "updated_at": "2022-06-30 04:36:31"
+                  },
+                  {
+                    "id": 26,
+                    "user_id": 5,
+                    "title": "Nec dubitamus multa iter quae et nos invenerat.",
+                    "priority": "medium",
+                    "status": "done",
+                    "message": "Readability counts.",
+                    "created_at": "2022-06-24 02:37:36",
+                    "updated_at": "2022-06-24 02:37:36"
+                  },
+                  {
+                    "id": 27,
+                    "user_id": 5,
+                    "title": "Inmensae subtilitatis, obscuris et malesuada fames.",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "Gallia est omnis divisa in partes tres, quarum.",
+                    "created_at": "2022-06-24 02:40:22",
+                    "updated_at": "2022-06-24 02:40:22"
+                  },
+                  {
+                    "id": 31,
+                    "user_id": 5,
+                    "title": "A communi observantia non est recedendum.",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "Although never is often better than *right* now.",
+                    "created_at": "2022-06-24 04:05:11",
+                    "updated_at": "2022-06-24 04:05:11"
+                  },
+                  {
+                    "id": 32,
+                    "user_id": 5,
+                    "title": "Curabitur blandit tempus ardua ridiculus sed magna.",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Curabitur est gravida et libero vitae dictum.",
+                    "created_at": "2022-06-24 08:07:25",
+                    "updated_at": "2022-06-24 08:07:25"
+                  },
+                  {
+                    "id": 33,
+                    "user_id": 5,
+                    "title": "There should be one-- and preferably only one --obvious way to do it.",
+                    "priority": "medium",
+                    "status": "progress",
+                    "message": "Gallia est omnis divisa in partes tres, quarum.",
+                    "created_at": "2022-06-24 08:25:35",
+                    "updated_at": "2022-06-24 08:25:35"
+                  },
+                  {
+                    "id": 51,
+                    "user_id": 5,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "waiting",
+                    "message": "Quisque ut dolor gravida, placerat libero vel, euismod.",
+                    "created_at": "2022-06-27 04:36:18",
+                    "updated_at": "2022-06-30 03:55:50"
+                  },
+                  {
+                    "id": 52,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "waiting",
+                    "message": "a",
+                    "created_at": "2022-06-27 04:37:07",
+                    "updated_at": "2022-06-30 06:41:10"
+                  },
+                  {
+                    "id": 82,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 08:48:34",
+                    "updated_at": "2022-06-29 08:48:34"
+                  },
+                  {
+                    "id": 83,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 08:49:30",
+                    "updated_at": "2022-06-29 08:49:30"
+                  },
+                  {
+                    "id": 84,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 08:52:44",
+                    "updated_at": "2022-06-29 08:52:44"
+                  },
+                  {
+                    "id": 85,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 08:53:03",
+                    "updated_at": "2022-06-29 08:53:03"
+                  },
+                  {
+                    "id": 86,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 08:53:44",
+                    "updated_at": "2022-06-29 08:53:44"
+                  },
+                  {
+                    "id": 87,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-29 09:06:53",
+                    "updated_at": "2022-06-29 09:06:53"
+                  },
+                  {
+                    "id": 88,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 02:24:15",
+                    "updated_at": "2022-06-30 02:24:15"
+                  },
+                  {
+                    "id": 89,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 02:25:02",
+                    "updated_at": "2022-06-30 02:25:02"
+                  },
+                  {
+                    "id": 90,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message",
+                    "created_at": "2022-06-30 03:59:49",
+                    "updated_at": "2022-06-30 03:59:49"
+                  },
+                  {
+                    "id": 91,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message",
+                    "created_at": "2022-06-30 04:02:16",
+                    "updated_at": "2022-06-30 04:02:16"
+                  },
+                  {
+                    "id": 92,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:09:05",
+                    "updated_at": "2022-06-30 04:09:05"
+                  },
+                  {
+                    "id": 93,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:10:09",
+                    "updated_at": "2022-06-30 04:10:09"
+                  },
+                  {
+                    "id": 94,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:10:18",
+                    "updated_at": "2022-06-30 04:10:18"
+                  },
+                  {
+                    "id": 95,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:11:08",
+                    "updated_at": "2022-06-30 04:11:08"
+                  },
+                  {
+                    "id": 96,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 04:21:27",
+                    "updated_at": "2022-06-30 04:21:27"
+                  },
+                  {
+                    "id": 97,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:21:30",
+                    "updated_at": "2022-06-30 04:21:30"
+                  },
+                  {
+                    "id": 98,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 04:22:32",
+                    "updated_at": "2022-06-30 04:22:32"
+                  },
+                  {
+                    "id": 99,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:22:34",
+                    "updated_at": "2022-06-30 04:22:34"
+                  },
+                  {
+                    "id": 100,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 04:23:13",
+                    "updated_at": "2022-06-30 04:23:13"
+                  },
+                  {
+                    "id": 102,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:30:13",
+                    "updated_at": "2022-06-30 04:30:13"
+                  },
+                  {
+                    "id": 103,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:31:05",
+                    "updated_at": "2022-06-30 04:31:05"
+                  },
+                  {
+                    "id": 104,
+                    "user_id": 1,
+                    "title": "new title postman",
+                    "priority": "high",
+                    "status": "progress",
+                    "message": "message postman is the best for testing your API",
+                    "created_at": "2022-06-30 04:32:00",
+                    "updated_at": "2022-06-30 04:32:00"
+                  },
+                  {
+                    "id": 106,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 04:42:28",
+                    "updated_at": "2022-06-30 04:42:28"
+                  },
+                  {
+                    "id": 108,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:10:40",
+                    "updated_at": "2022-06-30 06:10:40"
+                  },
+                  {
+                    "id": 110,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:11:02",
+                    "updated_at": "2022-06-30 06:11:02"
+                  },
+                  {
+                    "id": 113,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:12:57",
+                    "updated_at": "2022-06-30 06:12:57"
+                  },
+                  {
+                    "id": 115,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:14:36",
+                    "updated_at": "2022-06-30 06:14:36"
+                  },
+                  {
+                    "id": 117,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:17:14",
+                    "updated_at": "2022-06-30 06:17:14"
+                  },
+                  {
+                    "id": 119,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:26:05",
+                    "updated_at": "2022-06-30 06:26:05"
+                  },
+                  {
+                    "id": 121,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:33:51",
+                    "updated_at": "2022-06-30 06:33:51"
+                  },
+                  {
+                    "id": 123,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:36:55",
+                    "updated_at": "2022-06-30 06:36:55"
+                  },
+                  {
+                    "id": 127,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 06:49:51",
+                    "updated_at": "2022-06-30 06:49:51"
+                  },
+                  {
+                    "id": 128,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:02:51",
+                    "updated_at": "2022-06-30 07:02:51"
+                  },
+                  {
+                    "id": 129,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:03:05",
+                    "updated_at": "2022-06-30 07:03:05"
+                  },
+                  {
+                    "id": 130,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:04:05",
+                    "updated_at": "2022-06-30 07:04:05"
+                  },
+                  {
+                    "id": 131,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:04:07",
+                    "updated_at": "2022-06-30 07:04:07"
+                  },
+                  {
+                    "id": 132,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:11:55",
+                    "updated_at": "2022-06-30 07:11:55"
+                  },
+                  {
+                    "id": 133,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:12:25",
+                    "updated_at": "2022-06-30 07:12:25"
+                  },
+                  {
+                    "id": 135,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 07:27:14",
+                    "updated_at": "2022-06-30 07:27:14"
+                  },
+                  {
+                    "id": 137,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-06-30 08:35:45",
+                    "updated_at": "2022-06-30 08:35:46"
+                  },
+                  {
+                    "id": 139,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:37:24",
+                    "updated_at": "2022-07-01 01:37:24"
+                  },
+                  {
+                    "id": 140,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:37:58",
+                    "updated_at": "2022-07-01 01:38:18"
+                  },
+                  {
+                    "id": 141,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:38:27",
+                    "updated_at": "2022-07-01 01:38:27"
+                  },
+                  {
+                    "id": 143,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:42:37",
+                    "updated_at": "2022-07-01 01:43:42"
+                  },
+                  {
+                    "id": 144,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:47:31",
+                    "updated_at": "2022-07-01 01:47:31"
+                  },
+                  {
+                    "id": 146,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:48:11",
+                    "updated_at": "2022-07-01 01:48:11"
+                  },
+                  {
+                    "id": 147,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:48:25",
+                    "updated_at": "2022-07-01 01:48:25"
+                  },
+                  {
+                    "id": 149,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:57:00",
+                    "updated_at": "2022-07-01 01:57:01"
+                  },
+                  {
+                    "id": 151,
+                    "user_id": 5,
+                    "title": "update",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 01:57:31",
+                    "updated_at": "2022-07-01 02:29:39"
+                  },
+                  {
+                    "id": 152,
+                    "user_id": 5,
+                    "title": "postman add",
+                    "priority": "low",
+                    "status": "progress",
+                    "message": "Pellentesque habitant morbi tristique senectus et netus.",
+                    "created_at": "2022-07-01 02:29:14",
+                    "updated_at": "2022-07-01 02:29:14"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:34:28 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Add New Ticket",
+        "tags": [
+          "TICKETS"
+        ],
+        "operationId": "AddNewTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AddNewTicketRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddNewTicket"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "result": {
+                  "title": "new title postman",
+                  "priority": "high",
+                  "user_id": 1,
+                  "status": "progress",
+                  "message": "message postman is the best for testing your API",
+                  "updated_at": "2022-07-01 02:35:45",
+                  "created_at": "2022-07-01 02:35:45",
+                  "id": 153
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:35:45 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets/{ticketId}": {
+      "get": {
+        "summary": "Get Ticket ID",
+        "tags": [
+          "TICKETS"
+        ],
+        "operationId": "GetTicketID",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetTicketID"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "result": {
+                  "id": 153,
+                  "user_id": 1,
+                  "title": "new title postman",
+                  "priority": "high",
+                  "status": "progress",
+                  "message": "message postman is the best for testing your API",
+                  "created_at": "2022-07-01 02:35:45",
+                  "updated_at": "2022-07-01 02:35:45"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:36:12 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "Update Ticket",
+        "tags": [
+          "TICKETS"
+        ],
+        "operationId": "UpdateTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdateTicketRequest"
+            }
+          },
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateTicket"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "result": {
+                  "id": 153,
+                  "user_id": 1,
+                  "title": "new title postman",
+                  "priority": "high",
+                  "status": "progress",
+                  "message": "message postman is the best for testing your API",
+                  "created_at": "2022-07-01 02:35:45",
+                  "updated_at": "2022-07-01 02:35:45"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:36:59 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "59"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete Ticket",
+        "tags": [
+          "TICKETS"
+        ],
+        "operationId": "DeleteTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in":"header",
+            "name":"Authoriztion",
+            "required":true,
+            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeleteTicketRequest"
+            }
+          },
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteTicket"
+            },
+            "examples": {
+              "application/json": {
+                "success": true,
+                "result": {
+                  "id": 153,
+                  "user_id": 1,
+                  "title": "new title postman",
+                  "priority": "high",
+                  "status": "progress",
+                  "message": "message postman is the best for testing your API",
+                  "created_at": "2022-07-01 02:35:45",
+                  "updated_at": "2022-07-01 02:35:45"
+                }
+              }
+            },
+            "headers": {
+              "Host": {
+                "type": "string",
+                "default": "localhost:8000"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 01 Jul 2022 02:37:50 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "close"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "PHP/7.4.29"
+              },
+              "Cache-Control": {
+                "type": "string",
+                "default": "no-cache"
+              },
+              "X-RateLimit-Limit": {
+                "type": "string",
+                "default": "60"
+              },
+              "X-RateLimit-Remaining": {
+                "type": "string",
+                "default": "58"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "TokenResponseExample": {
+      "title": "TokenResponseExample",
+      "example": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTY1NjYzNzY2NSwiZXhwIjoxNjU2NjQxMjY1LCJuYmYiOjE2NTY2Mzc2NjUsImp0aSI6InpMUW9qZXlUU3RNUm9LeEwiLCJzdWIiOjUsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.-Hgb746KKGnjGYwfknTo4TnPNUZqA7du7N9b5jKXIrA",
+        "token_type": "bearer",
+        "expires_in": 3600
+      },
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "access_token",
+        "token_type",
+        "expires_in"
+      ]
+    },
+    "RefreshTokenExample": {
+      "title": "RefreshTokenExample",
+      "example": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9yZWZyZXNoIiwiaWF0IjoxNjU2NjM3NjY1LCJleHAiOjE2NTY2NDEzMTQsIm5iZiI6MTY1NjYzNzcxNCwianRpIjoidmk5SElFU3RKOXo3Uk9FMyIsInN1YiI6NSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.55voIGTuUO_pa_qt1n0FusZjaooM7_uPFAreVTYR7Qk",
+        "token_type": "bearer",
+        "expires_in": 3600
+      },
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "access_token",
+        "token_type",
+        "expires_in"
+      ]
+    },
+    "GetInfoAuthenticatedUserExample": {
+      "title": "GetInfoAuthenticatedUserExample",
+      "example": {
+        "status": true,
+        "result": {
+          "id": 5,
+          "username": "admin",
+          "type": "type",
+          "created_at": "2022-06-15 01:03:51",
+          "updated_at": "2022-06-30 07:31:21"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        }
+      },
+      "required": [
+        "status",
+        "result"
+      ]
+    },
+    "Result": {
+      "title": "Result",
+      "example": {
+        "id": 5,
+        "username": "admin",
+        "type": "type",
+        "created_at": "2022-06-15 01:03:51",
+        "updated_at": "2022-06-30 07:31:21"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "username": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "type",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "GetUsers": {
+      "title": "GetUsers",
+      "example": {
+        "success": true,
+        "result": [
+          {
+            "id": 5,
+            "username": "admin",
+            "type": "type",
+            "created_at": "2022-06-15 01:03:51",
+            "updated_at": "2022-06-30 07:31:21"
+          },
+          {
+            "id": 6,
+            "username": "dev",
+            "type": "type",
+            "created_at": "2022-06-17 02:36:21",
+            "updated_at": "2022-06-23 07:40:46"
+          },
+          {
+            "id": 25,
+            "username": "new username",
+            "type": "role",
+            "created_at": "2022-06-29 03:52:09",
+            "updated_at": "2022-06-29 04:02:25"
+          },
+          {
+            "id": 27,
+            "username": "postmanname",
+            "type": "role",
+            "created_at": "2022-06-29 07:33:42",
+            "updated_at": "2022-06-29 07:33:42"
+          },
+          {
+            "id": 29,
+            "username": "usernamenew",
+            "type": "role",
+            "created_at": "2022-06-29 07:36:37",
+            "updated_at": "2022-06-29 07:36:37"
+          },
+          {
+            "id": 32,
+            "username": "Alvena19",
+            "type": "role",
+            "created_at": "2022-06-29 07:40:29",
+            "updated_at": "2022-06-29 07:40:29"
+          },
+          {
+            "id": 33,
+            "username": "Elza_Swaniawski",
+            "type": "role",
+            "created_at": "2022-06-29 07:41:52",
+            "updated_at": "2022-06-29 07:41:52"
+          },
+          {
+            "id": 34,
+            "username": "Ara83",
+            "type": "role",
+            "created_at": "2022-06-29 07:42:10",
+            "updated_at": "2022-06-29 07:42:10"
+          },
+          {
+            "id": 35,
+            "username": "Beatrice60",
+            "type": "role",
+            "created_at": "2022-06-29 07:42:23",
+            "updated_at": "2022-06-29 07:42:23"
+          },
+          {
+            "id": 36,
+            "username": "Walter_Conn",
+            "type": "role",
+            "created_at": "2022-06-29 07:42:29",
+            "updated_at": "2022-06-29 07:42:29"
+          },
+          {
+            "id": 37,
+            "username": "Mohammed.Klein",
+            "type": "role",
+            "created_at": "2022-06-29 07:47:02",
+            "updated_at": "2022-06-29 07:47:02"
+          },
+          {
+            "id": 41,
+            "username": "Elena.Cole26",
+            "type": "role",
+            "created_at": "2022-06-29 08:08:17",
+            "updated_at": "2022-06-29 08:08:17"
+          },
+          {
+            "id": 50,
+            "username": "Cassandra2",
+            "type": "role",
+            "created_at": "2022-06-30 04:40:04",
+            "updated_at": "2022-06-30 04:40:04"
+          },
+          {
+            "id": 51,
+            "username": "Ellie.Reynolds",
+            "type": "role",
+            "created_at": "2022-06-30 04:41:10",
+            "updated_at": "2022-06-30 04:41:10"
+          },
+          {
+            "id": 52,
+            "username": "Bethel.Kohler",
+            "type": "role",
+            "created_at": "2022-06-30 04:41:43",
+            "updated_at": "2022-06-30 04:41:43"
+          },
+          {
+            "id": 59,
+            "username": "Samara.Stroman44",
+            "type": "role",
+            "created_at": "2022-06-30 06:23:53",
+            "updated_at": "2022-06-30 06:23:53"
+          },
+          {
+            "id": 66,
+            "username": "Alize_Mosciski18",
+            "type": "role",
+            "created_at": "2022-06-30 06:54:30",
+            "updated_at": "2022-06-30 06:54:30"
+          },
+          {
+            "id": 67,
+            "username": "Justus_Schuppe97",
+            "type": "role",
+            "created_at": "2022-06-30 06:54:41",
+            "updated_at": "2022-06-30 06:54:41"
+          },
+          {
+            "id": 68,
+            "username": "Stacey_Johnston9",
+            "type": "role",
+            "created_at": "2022-06-30 06:56:11",
+            "updated_at": "2022-06-30 06:56:11"
+          },
+          {
+            "id": 76,
+            "username": "Lindsay.Leuschke",
+            "type": "role",
+            "created_at": "2022-07-01 01:21:04",
+            "updated_at": "2022-07-01 01:21:04"
+          },
+          {
+            "id": 77,
+            "username": "Kara_Kris76",
+            "type": "role",
+            "created_at": "2022-07-01 01:22:03",
+            "updated_at": "2022-07-01 01:22:03"
+          },
+          {
+            "id": 78,
+            "username": "Mckayla_Kuphal69",
+            "type": "role",
+            "created_at": "2022-07-01 01:23:17",
+            "updated_at": "2022-07-01 01:23:17"
+          },
+          {
+            "id": 79,
+            "username": "Rod_Carter32",
+            "type": "role",
+            "created_at": "2022-07-01 01:23:47",
+            "updated_at": "2022-07-01 01:23:47"
+          },
+          {
+            "id": 80,
+            "username": "Cassandra_Bode78",
+            "type": "role",
+            "created_at": "2022-07-01 01:25:49",
+            "updated_at": "2022-07-01 01:25:49"
+          },
+          {
+            "id": 81,
+            "username": "Tyrese22",
+            "type": "role",
+            "created_at": "2022-07-01 01:25:57",
+            "updated_at": "2022-07-01 01:25:57"
+          },
+          {
+            "id": 87,
+            "username": "Samara15",
+            "type": "role",
+            "created_at": "2022-07-01 01:49:30",
+            "updated_at": "2022-07-01 01:49:30"
+          },
+          {
+            "id": 88,
+            "username": "Theresia.Wunsch",
+            "type": "role",
+            "created_at": "2022-07-01 01:50:35",
+            "updated_at": "2022-07-01 01:50:35"
+          },
+          {
+            "id": 89,
+            "username": "Stevie_Watsica",
+            "type": "role",
+            "created_at": "2022-07-01 01:51:24",
+            "updated_at": "2022-07-01 01:51:24"
+          },
+          {
+            "id": 91,
+            "username": "Jesse_Mohr91",
+            "type": "role",
+            "created_at": "2022-07-01 02:20:24",
+            "updated_at": "2022-07-01 02:20:24"
+          }
+        ],
+        "length": 29
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Result"
+          }
+        },
+        "length": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "success",
+        "result",
+        "length"
+      ]
+    },
+    "AddNewUserRequest": {
+      "title": "AddNewUserRequest",
+      "example": {
+        "username": "{{$randomUserName}}",
+        "password": "{{$randomPassword}}"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "AddNewUser": {
+      "title": "AddNewUser",
+      "example": {
+        "success": true,
+        "result": {
+          "username": "Nora.Davis50",
+          "type": "role",
+          "updated_at": "2022-07-01 02:26:47",
+          "created_at": "2022-07-01 02:26:47",
+          "id": 92
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "GetSpesificUser": {
+      "title": "GetSpesificUser",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 91,
+          "username": "Jesse_Mohr91",
+          "type": "role",
+          "created_at": "2022-07-01 02:20:24",
+          "updated_at": "2022-07-01 02:20:24"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "DeleteUser": {
+      "title": "DeleteUser",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 92,
+          "username": "Nora.Davis50",
+          "type": "role",
+          "created_at": "2022-07-01 02:26:47",
+          "updated_at": "2022-07-01 02:26:47"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "GetTasksSuccessExample": {
+      "title": "GetTasksSuccessExample",
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Result5"
+          }
+        },
+        "length": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "success",
+        "result",
+        "length"
+      ]
+    },
+    "Result5": {
+      "title": "Result5",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parent_id": {},
+        "lft": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rgt": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ticket_id": {},
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "parent_id",
+        "lft",
+        "rgt",
+        "depth",
+        "ticket_id",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "AddTaskRequest": {
+      "title": "AddTaskRequest",
+      "example": {
+        "title": "postman add",
+        "status": "progress",
+        "message": "Pellentesque habitant morbi tristique senectus et netus.",
+        "user_id": 5,
+        "priority": "low"
+      },
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "priority": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "status",
+        "message",
+        "user_id",
+        "priority"
+      ]
+    },
+    "AddTask": {
+      "title": "AddTask",
+      "example": {
+        "success": true,
+        "message": "task added successfully",
+        "result": {
+          "id": 164,
+          "title": "postman add",
+          "parent_id": 1,
+          "lft": 152,
+          "rgt": 153,
+          "depth": 1,
+          "ticket_id": 152,
+          "created_at": "2022-07-01 02:29:14",
+          "updated_at": "2022-07-01 02:29:14"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/definitions/Result6"
+        }
+      },
+      "required": [
+        "success",
+        "message",
+        "result"
+      ]
+    },
+    "Result6": {
+      "title": "Result6",
+      "example": {
+        "id": 164,
+        "title": "postman add",
+        "parent_id": 1,
+        "lft": 152,
+        "rgt": 153,
+        "depth": 1,
+        "ticket_id": 152,
+        "created_at": "2022-07-01 02:29:14",
+        "updated_at": "2022-07-01 02:29:14"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parent_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lft": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rgt": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ticket_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "parent_id",
+        "lft",
+        "rgt",
+        "depth",
+        "ticket_id",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "GETSpesificTask": {
+      "title": "GETSpesificTask",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 163,
+          "title": "postman add",
+          "parent_id": 1,
+          "lft": 150,
+          "rgt": 151,
+          "depth": 1,
+          "ticket_id": 151,
+          "created_at": "2022-07-01 01:57:31",
+          "updated_at": "2022-07-01 01:57:31"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result6"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "UpdateTaskRequest": {
+      "title": "UpdateTaskRequest",
+      "example": {
+        "title": "update"
+      },
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },        
+        "message": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string",
+          "enum":["high", "medium", "low"]
+        },
+        "status": {
+          "type": "string",
+          "enum":["waiting", "progress", "done"]
+        }
+      },
+      "required": [
+      ]
+    },
+    "UpdateTask": {
+      "title": "UpdateTask",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 163,
+          "title": "update",
+          "parent_id": 1,
+          "lft": 150,
+          "rgt": 151,
+          "depth": 1,
+          "ticket_id": 151,
+          "created_at": "2022-07-01 01:57:31",
+          "updated_at": "2022-07-01 02:29:39"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result6"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "Deleteatask": {
+      "title": "Deleteatask",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 163,
+          "title": "update",
+          "parent_id": 1,
+          "lft": 150,
+          "rgt": 151,
+          "depth": 1,
+          "ticket_id": 151,
+          "created_at": "2022-07-01 01:57:31",
+          "updated_at": "2022-07-01 02:29:39"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result6"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    },
+    "GETTICKETS": {
+      "title": "GETTICKETS",
+      "example": {
+        "status": true,
+        "result": [
+          {
+            "id": 17,
+            "user_id": 5,
+            "title": "update task --force",
+            "priority": "high",
+            "status": "done",
+            "message": "update description ",
+            "created_at": "2022-06-20 04:37:31",
+            "updated_at": "2022-06-30 04:36:20"
+          },
+          {
+            "id": 18,
+            "user_id": 5,
+            "title": "Quo usque tandem abutere, Catilina, patientia nostra?",
+            "priority": "high",
+            "status": "waiting",
+            "message": "Unless explicitly silenced.",
+            "created_at": "2022-06-20 08:20:07",
+            "updated_at": "2022-06-30 04:36:31"
+          },
+          {
+            "id": 26,
+            "user_id": 5,
+            "title": "Nec dubitamus multa iter quae et nos invenerat.",
+            "priority": "medium",
+            "status": "done",
+            "message": "Readability counts.",
+            "created_at": "2022-06-24 02:37:36",
+            "updated_at": "2022-06-24 02:37:36"
+          },
+          {
+            "id": 27,
+            "user_id": 5,
+            "title": "Inmensae subtilitatis, obscuris et malesuada fames.",
+            "priority": "high",
+            "status": "progress",
+            "message": "Gallia est omnis divisa in partes tres, quarum.",
+            "created_at": "2022-06-24 02:40:22",
+            "updated_at": "2022-06-24 02:40:22"
+          },
+          {
+            "id": 31,
+            "user_id": 5,
+            "title": "A communi observantia non est recedendum.",
+            "priority": "high",
+            "status": "progress",
+            "message": "Although never is often better than *right* now.",
+            "created_at": "2022-06-24 04:05:11",
+            "updated_at": "2022-06-24 04:05:11"
+          },
+          {
+            "id": 32,
+            "user_id": 5,
+            "title": "Curabitur blandit tempus ardua ridiculus sed magna.",
+            "priority": "high",
+            "status": "progress",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Curabitur est gravida et libero vitae dictum.",
+            "created_at": "2022-06-24 08:07:25",
+            "updated_at": "2022-06-24 08:07:25"
+          },
+          {
+            "id": 33,
+            "user_id": 5,
+            "title": "There should be one-- and preferably only one --obvious way to do it.",
+            "priority": "medium",
+            "status": "progress",
+            "message": "Gallia est omnis divisa in partes tres, quarum.",
+            "created_at": "2022-06-24 08:25:35",
+            "updated_at": "2022-06-24 08:25:35"
+          },
+          {
+            "id": 51,
+            "user_id": 5,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "waiting",
+            "message": "Quisque ut dolor gravida, placerat libero vel, euismod.",
+            "created_at": "2022-06-27 04:36:18",
+            "updated_at": "2022-06-30 03:55:50"
+          },
+          {
+            "id": 52,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "waiting",
+            "message": "a",
+            "created_at": "2022-06-27 04:37:07",
+            "updated_at": "2022-06-30 06:41:10"
+          },
+          {
+            "id": 82,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 08:48:34",
+            "updated_at": "2022-06-29 08:48:34"
+          },
+          {
+            "id": 83,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 08:49:30",
+            "updated_at": "2022-06-29 08:49:30"
+          },
+          {
+            "id": 84,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 08:52:44",
+            "updated_at": "2022-06-29 08:52:44"
+          },
+          {
+            "id": 85,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 08:53:03",
+            "updated_at": "2022-06-29 08:53:03"
+          },
+          {
+            "id": 86,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 08:53:44",
+            "updated_at": "2022-06-29 08:53:44"
+          },
+          {
+            "id": 87,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-29 09:06:53",
+            "updated_at": "2022-06-29 09:06:53"
+          },
+          {
+            "id": 88,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 02:24:15",
+            "updated_at": "2022-06-30 02:24:15"
+          },
+          {
+            "id": 89,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 02:25:02",
+            "updated_at": "2022-06-30 02:25:02"
+          },
+          {
+            "id": 90,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message",
+            "created_at": "2022-06-30 03:59:49",
+            "updated_at": "2022-06-30 03:59:49"
+          },
+          {
+            "id": 91,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message",
+            "created_at": "2022-06-30 04:02:16",
+            "updated_at": "2022-06-30 04:02:16"
+          },
+          {
+            "id": 92,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:09:05",
+            "updated_at": "2022-06-30 04:09:05"
+          },
+          {
+            "id": 93,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:10:09",
+            "updated_at": "2022-06-30 04:10:09"
+          },
+          {
+            "id": 94,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:10:18",
+            "updated_at": "2022-06-30 04:10:18"
+          },
+          {
+            "id": 95,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:11:08",
+            "updated_at": "2022-06-30 04:11:08"
+          },
+          {
+            "id": 96,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 04:21:27",
+            "updated_at": "2022-06-30 04:21:27"
+          },
+          {
+            "id": 97,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:21:30",
+            "updated_at": "2022-06-30 04:21:30"
+          },
+          {
+            "id": 98,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 04:22:32",
+            "updated_at": "2022-06-30 04:22:32"
+          },
+          {
+            "id": 99,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:22:34",
+            "updated_at": "2022-06-30 04:22:34"
+          },
+          {
+            "id": 100,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 04:23:13",
+            "updated_at": "2022-06-30 04:23:13"
+          },
+          {
+            "id": 102,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:30:13",
+            "updated_at": "2022-06-30 04:30:13"
+          },
+          {
+            "id": 103,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:31:05",
+            "updated_at": "2022-06-30 04:31:05"
+          },
+          {
+            "id": 104,
+            "user_id": 1,
+            "title": "new title postman",
+            "priority": "high",
+            "status": "progress",
+            "message": "message postman is the best for testing your API",
+            "created_at": "2022-06-30 04:32:00",
+            "updated_at": "2022-06-30 04:32:00"
+          },
+          {
+            "id": 106,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 04:42:28",
+            "updated_at": "2022-06-30 04:42:28"
+          },
+          {
+            "id": 108,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:10:40",
+            "updated_at": "2022-06-30 06:10:40"
+          },
+          {
+            "id": 110,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:11:02",
+            "updated_at": "2022-06-30 06:11:02"
+          },
+          {
+            "id": 113,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:12:57",
+            "updated_at": "2022-06-30 06:12:57"
+          },
+          {
+            "id": 115,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:14:36",
+            "updated_at": "2022-06-30 06:14:36"
+          },
+          {
+            "id": 117,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:17:14",
+            "updated_at": "2022-06-30 06:17:14"
+          },
+          {
+            "id": 119,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:26:05",
+            "updated_at": "2022-06-30 06:26:05"
+          },
+          {
+            "id": 121,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:33:51",
+            "updated_at": "2022-06-30 06:33:51"
+          },
+          {
+            "id": 123,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:36:55",
+            "updated_at": "2022-06-30 06:36:55"
+          },
+          {
+            "id": 127,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 06:49:51",
+            "updated_at": "2022-06-30 06:49:51"
+          },
+          {
+            "id": 128,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:02:51",
+            "updated_at": "2022-06-30 07:02:51"
+          },
+          {
+            "id": 129,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:03:05",
+            "updated_at": "2022-06-30 07:03:05"
+          },
+          {
+            "id": 130,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:04:05",
+            "updated_at": "2022-06-30 07:04:05"
+          },
+          {
+            "id": 131,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:04:07",
+            "updated_at": "2022-06-30 07:04:07"
+          },
+          {
+            "id": 132,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:11:55",
+            "updated_at": "2022-06-30 07:11:55"
+          },
+          {
+            "id": 133,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:12:25",
+            "updated_at": "2022-06-30 07:12:25"
+          },
+          {
+            "id": 135,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 07:27:14",
+            "updated_at": "2022-06-30 07:27:14"
+          },
+          {
+            "id": 137,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-06-30 08:35:45",
+            "updated_at": "2022-06-30 08:35:46"
+          },
+          {
+            "id": 139,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:37:24",
+            "updated_at": "2022-07-01 01:37:24"
+          },
+          {
+            "id": 140,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:37:58",
+            "updated_at": "2022-07-01 01:38:18"
+          },
+          {
+            "id": 141,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:38:27",
+            "updated_at": "2022-07-01 01:38:27"
+          },
+          {
+            "id": 143,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:42:37",
+            "updated_at": "2022-07-01 01:43:42"
+          },
+          {
+            "id": 144,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:47:31",
+            "updated_at": "2022-07-01 01:47:31"
+          },
+          {
+            "id": 146,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:48:11",
+            "updated_at": "2022-07-01 01:48:11"
+          },
+          {
+            "id": 147,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:48:25",
+            "updated_at": "2022-07-01 01:48:25"
+          },
+          {
+            "id": 149,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:57:00",
+            "updated_at": "2022-07-01 01:57:01"
+          },
+          {
+            "id": 151,
+            "user_id": 5,
+            "title": "update",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 01:57:31",
+            "updated_at": "2022-07-01 02:29:39"
+          },
+          {
+            "id": 152,
+            "user_id": 5,
+            "title": "postman add",
+            "priority": "low",
+            "status": "progress",
+            "message": "Pellentesque habitant morbi tristique senectus et netus.",
+            "created_at": "2022-07-01 02:29:14",
+            "updated_at": "2022-07-01 02:29:14"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Result10"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "result"
+      ]
+    },
+    "Result10": {
+      "title": "Result10",
+      "example": {
+        "id": 17,
+        "user_id": 5,
+        "title": "update task --force",
+        "priority": "high",
+        "status": "done",
+        "message": "update description ",
+        "created_at": "2022-06-20 04:37:31",
+        "updated_at": "2022-06-30 04:36:20"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "user_id",
+        "title",
+        "priority",
+        "status",
+        "message",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "AddNewTicketRequest": {
+      "title": "AddNewTicketRequest",
+      "example": {
+        "title": "new title postman",
+        "priority": "high",
+        "user_id": 1,
+        "status": "progress",
+        "message": "message postman is the best for testing your API"
+      },
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "priority",
+        "user_id",
+        "status",
+        "message"
+      ]
+    },
+    "AddNewTicket": {
+      "title": "AddNewTicket",
+      "example": {
+        "status": true,
+        "result": {
+          "title": "new title postman",
+          "priority": "high",
+          "user_id": 1,
+          "status": "progress",
+          "message": "message postman is the best for testing your API",
+          "updated_at": "2022-07-01 02:35:45",
+          "created_at": "2022-07-01 02:35:45",
+          "id": 153
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result10"
+        }
+      },
+      "required": [
+        "status",
+        "result"
+      ]
+    },
+    "GetTicketID": {
+      "title": "GetTicketID",
+      "example": {
+        "status": true,
+        "result": {
+          "id": 153,
+          "user_id": 1,
+          "title": "new title postman",
+          "priority": "high",
+          "status": "progress",
+          "message": "message postman is the best for testing your API",
+          "created_at": "2022-07-01 02:35:45",
+          "updated_at": "2022-07-01 02:35:45"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result10"
+        }
+      },
+      "required": [
+        "status",
+        "result"
+      ]
+    },
+    "UpdateTicketRequest": {
+      "title": "UpdateTicketRequest",
+      "example": {
+        "title": "new title postman",
+        "priority": "high"
+      },
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "priority"
+      ]
+    },
+    "UpdateTicket": {
+      "title": "UpdateTicket",
+      "example": {
+        "status": true,
+        "result": {
+          "id": 153,
+          "user_id": 1,
+          "title": "new title postman",
+          "priority": "high",
+          "status": "progress",
+          "message": "message postman is the best for testing your API",
+          "created_at": "2022-07-01 02:35:45",
+          "updated_at": "2022-07-01 02:35:45"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result10"
+        }
+      },
+      "required": [
+        "status",
+        "result"
+      ]
+    },
+    "DeleteTicketRequest": {
+      "title": "DeleteTicketRequest",
+      "example": {
+        "title": "new title postman",
+        "priority": "high",
+        "user_id": 1,
+        "status": "progress"
+      },
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "priority",
+        "user_id",
+        "status"
+      ]
+    },
+    "DeleteTicket": {
+      "title": "DeleteTicket",
+      "example": {
+        "success": true,
+        "result": {
+          "id": 153,
+          "user_id": 1,
+          "title": "new title postman",
+          "priority": "high",
+          "status": "progress",
+          "message": "message postman is the best for testing your API",
+          "created_at": "2022-07-01 02:35:45",
+          "updated_at": "2022-07-01 02:35:45"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/Result10"
+        }
+      },
+      "required": [
+        "success",
+        "result"
+      ]
+    }
+  },
+  
+  "security": [],
+  "tags": [
+    {
+      "name": "AUTH"
+    },
+    {
+      "name": "USER"
+    },
+    {
+      "name": "TASKS"
+    },
+    {
+      "name": "TICKETS"
+    }
+  ]
+}
