@@ -4,16 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUser;
-
-use App\Services\CreateUserService;
-use App\User as UserModel;
-use Exception;
-use Illuminate\Contracts\Cache\Store;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Validator;
-use Illuminate\Database\QueryException;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -25,51 +20,24 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index() : JsonResponse
     {
-           $users = UserModel::all();
-
-           if (count($users) === 0) {
-            return response()->json([
-                'success' => false,
-                'length' => count($users)
-            ], 404);
-           }
-
-           return response()->json([
-            'success' => true,
-            'result' => $users,
-            'length' => count($users)
-        ], 200);
+        $users = UserService::getUsers();
+        return $users;
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreUser $request, CreateUserService $createUserService)
+    public function store(StoreUser $request): JsonResponse
     {
-        try {
-            $user = $createUserService->handle($request);
-            return response()->json(['success' => true, 'result' => $user], 201);
-        } catch (Exception $e) {
-            if ($e instanceof ModelNotFoundException) {
-                return response()->json(
-                    ['success' => false,
-                        'message' => $e->getMessage()], 400);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => $e->getMessage(),
-                    'class' => get_class($e)
-                    ], 400);
-            }
-        }  
-
+        $user = UserService::create($request);
+        return $user;
     }
 
     /**
@@ -78,39 +46,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        
-        try {
-            $user = UserModel::findOrFail($id);
-            return response()->json([
-                'success' => true,
-                'result' => $user
-            ], 200);
-
-        } catch (Exception $e) {
-            if ($e instanceof ModelNotFoundException) {
-                return response()->json(
-                    ['success' => false,
-                        'message' => 'User with '.$id.' not found'], 404);
-            } else {
-                return response()->json(
-                    ['success' => false,
-                        'message' => $e->getMessage()], 404);
-            }
-        }  
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $user = UserService::getUserById($id);
+        return $user;
     }
 
     /**
@@ -118,27 +57,12 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(StoreUser $request, $id)
+    public function update(StoreUser $request, $id): JsonResponse
     {
-
-        // PUT
-        try {
-            $user = UserModel::findOrFail($id);
-            $user->update([
-                'username' => $request['username'],
-                'password' => bcrypt($request['password']),
-
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'user update successfully'
-            ]);
-        } catch (Exception $err){
-            return $err->getMessage();
-        }
+        $user = UserService::update($request, $id);
+        return $user;   
     }
 
     /**
@@ -147,33 +71,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        // return $id;
-
-        try {
-            $user = UserModel::findOrFail($id);
-            $user->delete();
-
-            return response()->json([
-                'success' => true,
-                "result" => $user
-            ], 200);
-
-        } catch (Exception $e) {
-            if ($e instanceof ModelNotFoundException) {
-                return response()->json(
-                    ['success' => false,
-                        'message' => 'User with '.$id.' not found'], 404);
-            } else {
-                return response()->json(
-                    ['success' => false,
-                        'message' => $e->getMessage()], 404);
-            }
-        }  
-        
-    
+        $user = UserService::delete($id);
+        return $user;
     }
 
-    
 }
