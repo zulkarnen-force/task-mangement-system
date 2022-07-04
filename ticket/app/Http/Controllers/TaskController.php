@@ -7,6 +7,7 @@ use App\TaskNode;
 use App\Ticket;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
 
@@ -25,7 +26,6 @@ class TaskController extends Controller
 
     public function index()
     {
-        // $tasks = TaskNode::all()->toHierarchy();
         $tasks = TaskNode::all()->toHierarchy();
         $root = TaskNode::root();
         $childrens =  $root->getDescendants();
@@ -73,7 +73,7 @@ class TaskController extends Controller
         
         $child = $root->children()->create(['title' => $title, 'ticket_id' => $ticket_id]);
 
-        return Redirect::to('tasks')->with('success', 'note added successfully');
+        return Redirect::to('tasks')->with('success', 'task added successfully');
 
      
     }
@@ -117,9 +117,6 @@ class TaskController extends Controller
     {
         // update
         $task = TaskNode::find($id);
-        $ticket = $task->ticket;
-       
-        // $ticket = TaskNode::find($id);
       
         $validator = $this->validate($request, [
             'message' => 'max:255'
@@ -128,15 +125,10 @@ class TaskController extends Controller
 
         $title = $request->input('title');
         
-        $ticket = $ticket->update($request->all());
-        
-        return  dd($ticket);
-        
-        $root = TaskNode::root();
-        
-        $child = $root->children()->create(['title' => $title, 'ticket_id' => $ticket_id]);
+        $ticket = $task->ticket->update($request->all());
+        $task = $task->update(['title' => $title]);
 
-        return Redirect::to('tasks')->with('success', 'note added successfully');
+        return Redirect::to('tasks')->with('success', 'tasks updated');
     }
 
     /**
