@@ -60,6 +60,6 @@ Route::resource('tickets', 'Api\TicketController', ['names' => [
 ], 'except' => ['edit', 'create']]);
 
 
-
-
-
+Route::get('/docs', function(Request $requset) {
+    return view('api.docs');
+});

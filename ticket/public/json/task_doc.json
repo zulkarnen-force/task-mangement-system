@@ -2,9 +2,10 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0",
-    "title": "Task Management Documentation",
+    "title": "API Task Management Documentation",
     "description": "Task Management API Binokular Media Utama",
     "contact": {
+      "name":"Zulkarnen",
       "email": "zulkarnen1900016072@webmail.uad.ac.id"
     }
   },
@@ -12,7 +13,7 @@
   "components": {
     "schemas": [{
       "header": {
-        "in":"header",
+        "in":"Body",
         "required":true,
         "type":"string",
         "schema":[{
@@ -39,18 +40,22 @@
       "get": {
         "summary": "Get JWT Token",
         "tags": [
-          "AUTH"
+          "Authentication"
         ],
         "operationId": "GetToken",
         "deprecated": false,
         "produces": [
           "application/json"
         ],
-        "parameters": [{
-            "in":"header",
-            "name":"Authoriztion",
-            "required":true,
-            "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
+        "parameters": [
+           {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AddNewUserRequest"
+            }
           }
         ],
         "responses": {
@@ -83,7 +88,7 @@
       "get": {
         "summary": "Refresh Token",
         "tags": [
-          "AUTH"
+          "Authentication"
         ],
         "operationId": "RefreshToken",
         "deprecated": false,
@@ -111,33 +116,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 01:08:34 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -149,7 +130,7 @@
       "get": {
         "summary": "Get Info Authenticated User",
         "tags": [
-          "AUTH"
+          "Authentication"
         ],
         "operationId": "GetInfoAuthenticatedUser",
         "deprecated": false,
@@ -182,33 +163,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 01:09:20 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -220,7 +177,7 @@
       "get": {
         "summary": "Get Users",
         "tags": [
-          "USER"
+          "Users"
         ],
         "operationId": "GetUsers",
         "deprecated": false,
@@ -452,33 +409,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:22:31 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -488,7 +421,7 @@
       "post": {
         "summary": "Add New User",
         "tags": [
-          "USER"
+          "Users"
         ],
         "operationId": "AddNewUser",
         "deprecated": false,
@@ -531,33 +464,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:26:47 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -569,7 +478,7 @@
       "get": {
         "summary": "Get Spesific User",
         "tags": [
-          "USER"
+          "Users"
         ],
         "operationId": "GetSpesificUser",
         "deprecated": false,
@@ -610,33 +519,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:20:27 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "58"
+                "default": "application/json"
               }
             }
           }
@@ -646,7 +531,7 @@
       "delete": {
         "summary": "Delete User",
         "tags": [
-          "USER"
+          "Users"
         ],
         "operationId": "DeleteUser",
         "deprecated": false,
@@ -681,33 +566,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:27:13 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -719,7 +580,7 @@
       "get": {
         "summary": "Get Tasks",
         "tags": [
-          "TASKS"
+          "Tasks"
         ],
         "operationId": "GetTasks",
         "deprecated": false,
@@ -741,33 +602,9 @@
               "$ref": "#/definitions/GetTasksSuccessExample"
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:15:24 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -777,7 +614,7 @@
       "post": {
         "summary": "Add Task",
         "tags": [
-          "TASKS"
+          "Tasks"
         ],
         "operationId": "AddTask",
         "deprecated": false,
@@ -825,33 +662,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:29:14 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -863,7 +676,7 @@
       "get": {
         "summary": "GET Spesific Task",
         "tags": [
-          "TASKS"
+          "Tasks"
         ],
         "operationId": "GETSpesificTask",
         "deprecated": false,
@@ -908,33 +721,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 01:57:34 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "57"
+                "default": "application/json"
               }
             }
           }
@@ -944,7 +733,7 @@
       "put": {
         "summary": "Update Task",
         "tags": [
-          "TASKS"
+          "Tasks"
         ],
         "operationId": "UpdateTask",
         "deprecated": false,
@@ -998,33 +787,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:29:39 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -1034,7 +799,7 @@
       "delete": {
         "summary": "Delete a task",
         "tags": [
-          "TASKS"
+          "Tasks"
         ],
         "operationId": "Deleteatask",
         "deprecated": false,
@@ -1079,33 +844,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:30:04 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -1117,7 +858,7 @@
       "get": {
         "summary": "GET TICKETS",
         "tags": [
-          "TICKETS"
+          "Tickets"
         ],
         "operationId": "GETTICKETS",
         "deprecated": false,
@@ -1736,33 +1477,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:34:28 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -1772,7 +1489,7 @@
       "post": {
         "summary": "Add New Ticket",
         "tags": [
-          "TICKETS"
+          "Tickets"
         ],
         "operationId": "AddNewTicket",
         "deprecated": false,
@@ -1818,33 +1535,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:35:45 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -1856,7 +1549,7 @@
       "get": {
         "summary": "Get Ticket ID",
         "tags": [
-          "TICKETS"
+          "Tickets"
         ],
         "operationId": "GetTicketID",
         "deprecated": false,
@@ -1900,33 +1593,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:36:12 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "59"
+                "default": "application/json"
               }
             }
           }
@@ -1936,7 +1605,7 @@
       "put": {
         "summary": "Update Ticket",
         "tags": [
-          "TICKETS"
+          "Tickets"
         ],
         "operationId": "UpdateTicket",
         "deprecated": false,
@@ -2025,7 +1694,7 @@
       "delete": {
         "summary": "Delete Ticket",
         "tags": [
-          "TICKETS"
+          "Tickets"
         ],
         "operationId": "DeleteTicket",
         "deprecated": false,
@@ -2078,33 +1747,9 @@
               }
             },
             "headers": {
-              "Host": {
+              "Content-Type": {
                 "type": "string",
-                "default": "localhost:8000"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Fri, 01 Jul 2022 02:37:50 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "close"
-              },
-              "X-Powered-By": {
-                "type": "string",
-                "default": "PHP/7.4.29"
-              },
-              "Cache-Control": {
-                "type": "string",
-                "default": "no-cache"
-              },
-              "X-RateLimit-Limit": {
-                "type": "string",
-                "default": "60"
-              },
-              "X-RateLimit-Remaining": {
-                "type": "string",
-                "default": "58"
+                "default": "application/json"
               }
             }
           }
@@ -2464,8 +2109,8 @@
     "AddNewUserRequest": {
       "title": "AddNewUserRequest",
       "example": {
-        "username": "{{$randomUserName}}",
-        "password": "{{$randomPassword}}"
+        "username": "admin",
+        "password": "sup3erS3cret"
       },
       "type": "object",
       "properties": {
@@ -3748,16 +3393,16 @@
   "security": [],
   "tags": [
     {
-      "name": "AUTH"
+      "name": "Authentication"
     },
     {
-      "name": "USER"
+      "name": "Users"
     },
     {
-      "name": "TASKS"
+      "name": "Tasks"
     },
     {
-      "name": "TICKETS"
+      "name": "Tickets"
     }
   ]
 }
