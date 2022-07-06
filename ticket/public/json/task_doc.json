@@ -38,7 +38,7 @@
   "paths": {
     "/auth/token": {
       "get": {
-        "summary": "Get JWT Token",
+        "summary": "Get Token",
         "tags": [
           "Authentication"
         ],
@@ -79,9 +79,7 @@
             }
           }
         },
-        "security": [{
-          "header":[]
-        }]
+        "security": []
       }
     },
     "/auth/refresh": {
@@ -97,7 +95,7 @@
         ],
         "parameters": [{
           "in":"header",
-          "name":"Authoriztion",
+          "name":"Authorization",
           "required":true,
           "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
         }
@@ -128,7 +126,7 @@
     },
     "/auth/info": {
       "get": {
-        "summary": "Get Info Authenticated User",
+        "summary": "Get Authenticated User ",
         "tags": [
           "Authentication"
         ],
@@ -139,7 +137,7 @@
         ],
         "parameters": [{
           "in":"header",
-          "name":"Authoriztion",
+          "name":"Authorization",
           "required":true,
           "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
         }
@@ -186,7 +184,7 @@
         ],
         "parameters": [{
           "in":"header",
-          "name":"Authoriztion",
+          "name":"Authorization",
           "required":true,
           "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
         }
@@ -431,7 +429,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -488,7 +486,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -590,7 +588,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           }
@@ -624,7 +622,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -674,7 +672,7 @@
     },
     "/tasks/{taskId}": {
       "get": {
-        "summary": "GET Spesific Task",
+        "summary": "Get Spesific Task",
         "tags": [
           "Tasks"
         ],
@@ -686,7 +684,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -743,7 +741,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -809,7 +807,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -856,7 +854,7 @@
     },
     "/tickets": {
       "get": {
-        "summary": "GET TICKETS",
+        "summary": "Get Tickets",
         "tags": [
           "Tickets"
         ],
@@ -868,7 +866,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           }
@@ -1499,7 +1497,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -1559,7 +1557,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -1615,7 +1613,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },
@@ -1704,7 +1702,7 @@
         "parameters": [
           {
             "in":"header",
-            "name":"Authoriztion",
+            "name":"Authorization",
             "required":true,
             "example":"Bearer eyJ0eXAiOiJKV1QiLCJhbG..."
           },

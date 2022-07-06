@@ -16,5 +16,10 @@ class Ticket extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    public function task()
+    {
+        return $this->belongsTo('App\TaskNode', 'id', 'ticket_id');
+    }
+
     
 }
