@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 */
 
 Route::group(['prefix' => 'auth'], function () {
-   Route::get('token', 'Api\AuthController@getToken');
+   Route::post('token', 'Api\AuthController@getToken')->name('api.auth.token');;
    Route::get('refresh', 'Api\AuthController@refresh')->name('api.auth.refresh');
    Route::get('info', 'Api\AuthController@info')->name('api.auth.info');
    Route::post('logout', 'Api\AuthController@logout')->name('api.auth.logout');
