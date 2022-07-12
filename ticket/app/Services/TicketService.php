@@ -30,7 +30,7 @@ class TicketService
     {
         try {
             $title = $request->get('title');
-            $ticket = Ticket::create($request->all());  
+            $ticket = Ticket::create(["user_id" => auth()->user()->id] + $request->all() );  
             $ticketId = $ticket->id;
          
             $root = TaskNode::root();
@@ -38,6 +38,7 @@ class TicketService
             
             return response()->json(['success' => true, 'result' => $ticket], 201); 
         } catch (Exception $e) {
+            
             if ($e instanceof ModelNotFoundException) {
                 return response()->json(['success' => false, 'message' => 'ticket not found'], 404);
             } else {

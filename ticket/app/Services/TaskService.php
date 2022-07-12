@@ -31,26 +31,15 @@ class TaskService
             'title' => 'required',
             'priority' => ['required','in:high,medium,low'],
             'status' => ['required','in:progress,waiting,done'],
-            'user_id' => 'required',
         ]);
-
-        try {
-            User::findOrFail($request->get('user_id'));
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                    "success" => false,
-                    "message" => "user id required",
-                ], 404);
-        }
-
 
         if ($validator->fails())
         {
-            return response()->json(['success' => 'false',"errors" => $validator->messages()], 400);
+            return response()->json(['success' => false, "errors" => $validator->messages()], 400);
         } 
         
 
-        $ticket = Ticket::create($request->all());
+        $ticket = Ticket::create(['user_id'=> auth()->user()->id]  + $request->all());
         $ticket_id =  $ticket->id;
         
         $root = TaskNode::root();

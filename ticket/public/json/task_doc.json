@@ -610,7 +610,7 @@
         "security": []
       },
       "post": {
-        "summary": "Add Task",
+        "summary": "Add new task",
         "tags": [
           "Tasks"
         ],
@@ -2276,7 +2276,6 @@
         "title": "postman add",
         "status": "progress",
         "message": "Pellentesque habitant morbi tristique senectus et netus.",
-        "user_id": 5,
         "priority": "low"
       },
       "type": "object",
@@ -2290,10 +2289,6 @@
         "message": {
           "type": "string"
         },
-        "user_id": {
-          "type": "integer",
-          "format": "int32"
-        },
         "priority": {
           "type": "string"
         }
@@ -2302,7 +2297,6 @@
         "title",
         "status",
         "message",
-        "user_id",
         "priority"
       ]
     },
@@ -3188,7 +3182,6 @@
       "example": {
         "title": "new title postman",
         "priority": "high",
-        "user_id": 1,
         "status": "progress",
         "message": "message postman is the best for testing your API"
       },
@@ -3200,10 +3193,6 @@
         "priority": {
           "type": "string"
         },
-        "user_id": {
-          "type": "integer",
-          "format": "int32"
-        },
         "status": {
           "type": "string"
         },
@@ -3214,7 +3203,6 @@
       "required": [
         "title",
         "priority",
-        "user_id",
         "status",
         "message"
       ]
